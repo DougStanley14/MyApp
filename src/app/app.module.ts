@@ -1,6 +1,16 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
+// Store imports
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+
+// SalesStore imports
+import { reducer } from './state/sales-data.reducer';
+import { SalesDataEffects } from './state/sales-data.effects';
+
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { UsersComponent } from './users/users.component';
@@ -31,6 +41,9 @@ export function apiConfigFactory(): CustomConfiguration {
     AppRoutingModule,
     HttpClientModule,
     ApiModule.forRoot(apiConfigFactory),
+    StoreModule.forRoot({ salesData: reducer }),
+    EffectsModule.forRoot([SalesDataEffects]),
+    StoreDevtoolsModule.instrument(),
   ],
   providers: [],
   bootstrap: [AppComponent]
